@@ -19,11 +19,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
-      - name: Run tests
-        - run: |
-          yarn install --frozen-lockfile
-          yarn test
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
       - name: Deploy to render.com
         uses: fjogeleit/http-request-action@v1
         with:
