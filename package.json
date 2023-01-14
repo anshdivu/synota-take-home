@@ -12,7 +12,8 @@
     "start": "ts-node -r dotenv/config bin/www",
     "watch": "nodemon --watch \"src/**\" --watch \"bin/**\" --watch \".env\" --ext \"ts,json\" --exec \"yarn start\"",
     "start:prod": "node ./dist/bin/www",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "echo 'Error: no test specified'"
   },
   "dependencies": {
     "express": "^4.18.2"
