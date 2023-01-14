@@ -25,5 +25,5 @@ jobs:
       - name: Deploy to Render
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ env.RENDER_PROD_DEPLOY_HOOK }}
+          url: ${{ secrets.RENDER_PROD_DEPLOY_HOOK }}
           method: GET
