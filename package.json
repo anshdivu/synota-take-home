@@ -9,9 +9,9 @@
   },
   "scripts": {
     "build": "rm -rf dist && yarn tsc",
-    "start": "ts-node -r dotenv/config bin/www",
+    "dev": "ts-node -r dotenv/config bin/www",
     "watch": "nodemon --watch \"src/**\" --watch \"bin/**\" --watch \".env\" --ext \"ts,json\" --exec \"yarn start\"",
-    "start:prod": "node ./dist/bin/www",
+    "start": "node ./dist/bin/www",
     "prepare": "husky install",
     "test": "echo 'Error: no test specified'"
   },
