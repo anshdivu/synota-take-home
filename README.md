@@ -32,12 +32,12 @@ yarn install
 ```sh
 # for prod deployment
 yarn build # Probably run this in your build pipeline
-yarn start:prod
+yarn start
 
 # OR #
 
 # for local development
-yarn start
+yarn dev
 
 # OR #
 
