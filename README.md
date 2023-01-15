@@ -9,6 +9,7 @@ Build a server-side app (REST API) that can do the following:
 - [ ] Non volatile memory to persist across restarts (SQL database, perhaps)
 - [ ] It should have tests that automatically run in CI/CD (perhaps GH Actions)
 - [ ] It should deploy to a host upon successful automated testing (perhaps heroku, render, fly.io, etc.)
+- [ ] Make sure to document your process with Git on Github/Gitlab.
 
 ## Prerequisites
 
@@ -42,11 +43,16 @@ yarn dev
 # OR #
 
 # for local development with file watch (auto-restart)
-yarn watch
+yarn dev:watch
 ```
 
 ## Run tests
 
 ```sh
 yarn test
+
+# OR #
+
+# for local development with file watch (auto-restart)
+yarn test:watch
 ```

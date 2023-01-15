@@ -8,12 +8,13 @@
     "yarn": ">=1.22"
   },
   "scripts": {
-    "build": "rm -rf dist && yarn tsc",
-    "dev": "ts-node -r dotenv/config bin/www",
-    "watch": "nodemon --watch \"src/**\" --watch \"bin/**\" --watch \".env\" --ext \"ts,json\" --exec \"yarn start\"",
-    "start": "node ./dist/bin/www",
     "prepare": "husky install",
-    "test": "vitest run --coverage"
+    "build": "rm -rf dist && yarn tsc",
+    "start": "node ./dist/bin/www",
+    "dev": "ts-node -r dotenv/config bin/www",
+    "dev:watch": "nodemon --watch \"src/**\" --watch \"bin/**\" --watch \".env\" --ext \"ts,json\" --exec \"yarn start\"",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest dev"
   },
   "dependencies": {
     "express": "^4.18.2"
