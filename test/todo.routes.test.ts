@@ -1,6 +1,8 @@
 import express, { ErrorRequestHandler } from "express";
 import request from "supertest";
-import { describe, test, expect } from "vitest";
+import { describe, expect, test } from "vitest";
+
+import handleErrors from "../src/error.handler";
 import todoRoutes from "../src/todo.routes";
 
 describe.concurrent("todo.routes", () => {
@@ -18,7 +20,7 @@ describe.concurrent("todo.routes", () => {
 
   test("PUT /todos fails when body not a list of string", async () => {
     const expectedTodo = { testObj: "invalid" };
-    const app = express().use(todoRoutes).use(testErrorHandler);
+    const app = express().use(todoRoutes).use(handleErrors);
 
     const response = await request(app)
       .put("/users/test_user/todos")
