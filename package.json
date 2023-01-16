@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "rm -rf dist && yarn tsc",
-    "start": "yarn migrate deploy && node ./dist/bin/www",
+    "start": "prisma migrate deploy && node ./dist/bin/www",
     "dev": "ts-node -r dotenv/config bin/www",
     "dev:watch": "nodemon --watch \"src/**\" --watch \"bin/**\" --watch \".env\" --ext \"ts,json\" --exec \"yarn dev\"",
     "dev:db": "postgres -D /usr/local/var/postgresql@14",
