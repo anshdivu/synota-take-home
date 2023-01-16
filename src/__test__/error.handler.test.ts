@@ -3,7 +3,7 @@ import express, { ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, expect, test } from "vitest";
 
-import handleErrors from "../src/error.handler";
+import handleErrors from "../error.handler";
 
 describe.concurrent("error.handler", () => {
   test("handles boom errors", async () => {

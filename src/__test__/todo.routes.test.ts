@@ -3,8 +3,8 @@ import express, { ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, expect, test, vi } from "vitest";
 
-import todoRoutes from "../src/todo.routes";
-import { TodoService } from "../src/todo.service";
+import todoRoutes from "../todo.routes";
+import { TodoService } from "../todo.service";
 
 describe("todo.routes", () => {
   test("PUT /todos accepts a list of string", async () => {

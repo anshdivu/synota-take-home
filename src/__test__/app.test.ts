@@ -1,6 +1,6 @@
 import request from "supertest";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import app from "../src/app";
+import app from "../app";
 
 describe.concurrent("app.ts", () => {
   vi.mock("@prisma/client", () => {
