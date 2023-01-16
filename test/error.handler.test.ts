@@ -23,14 +23,14 @@ describe.concurrent("error.handler", () => {
   test("returns 500 status and message from unknown errors", async () => {
     const app = express()
       .use("/", () => {
-        throw new Error("random error message");
+        throw new Error("test error msg");
       })
       .use(handleErrors);
 
     const response = await request(app).get("/");
 
     expect(response.statusCode).toBe(500);
-    expect(response.body).toEqual({ message: "random error message" });
+    expect(response.body).toEqual({ message: "test error msg" });
   });
 
   test("returns 500 status and err", async () => {
@@ -43,6 +43,6 @@ describe.concurrent("error.handler", () => {
     const response = await request(app).get("/");
 
     expect(response.statusCode).toBe(500);
-    expect(response.body).toEqual({ message: "Unknown Error" });
+    expect(response.body).toEqual({ message: "Internal Server Error" });
   });
 });

@@ -1,17 +1,28 @@
 import request from "supertest";
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import app from "../src/app";
 
 describe.concurrent("app.ts", () => {
-  it("/liveness return 'Live' when app running", async () => {
-    const response = await request(app).get("/liveness");
+  vi.mock("@prisma/client", () => {
+    const PrismaClient = vi.fn();
+    PrismaClient.prototype.$connect = vi.fn();
+
+    return { PrismaClient };
+  });
+
+  afterEach(() => {
+    vi.resetModules();
+  });
+
+  it("/alive return 'Live' when app running", async () => {
+    const response = await request(app).get("/alive");
 
     expect(response.text).toBe("Live");
     expect(response.statusCode).toBe(200);
   });
 
-  it("/readiness return 'Ready' when app running", async () => {
-    const response = await request(app).get("/readiness");
+  it("/ready return 'Ready' when app running", async () => {
+    const response = await request(app).get("/ready");
 
     expect(response.text).toBe("Ready");
     expect(response.statusCode).toBe(200);

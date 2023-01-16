@@ -16,7 +16,7 @@
     "dev:db": "postgres -D /usr/local/var/postgresql@14",
     "db:init": "prisma migrate dev --name init",
     "test": "vitest run --coverage",
-    "test:watch": "vitest dev"
+    "test:watch": "vitest watch"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
