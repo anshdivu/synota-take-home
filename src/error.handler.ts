@@ -11,7 +11,9 @@ const handleErrors: ErrorRequestHandler = (err, _req, res, _next) => {
       .send({ message: payload.message, input: err.data.input });
   }
 
-  return res.status(500).send({ message: err?.message || "Unknown Error" });
+  return res
+    .status(500)
+    .send({ message: err?.message || "Internal Server Error" });
 };
 
 export default handleErrors;

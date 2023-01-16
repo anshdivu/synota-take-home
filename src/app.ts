@@ -4,6 +4,7 @@ import morgan from "morgan";
 import { PrismaClient } from "@prisma/client";
 import handleErrors from "./error.handler";
 import todoRoutes from "./todo.routes";
+import { TodoService } from "./todo.service";
 
 const app = express();
 const db = new PrismaClient({ log: ["query", "info", "warn", "error"] });
@@ -12,8 +13,8 @@ app.disable("x-powered-by");
 app.use(morgan("short"));
 app.use(express.json());
 
-app.get("/liveness", (_, res) => res.send("Live"));
-app.get("/readiness", async (_, res) => {
+app.get("/alive", (_, res) => res.send("Live"));
+app.get("/ready", async (_, res) => {
   // This server is ready to accept request once it's connected to the DB
   // and if the db connection fails this server will NEVER we able to accept requests
   // NOTE - $connect function is idempotent; we can safely call it in every `/readiness` call
@@ -21,7 +22,7 @@ app.get("/readiness", async (_, res) => {
   res.send("Ready");
 });
 
-app.use(todoRoutes(db));
+app.use(todoRoutes(new TodoService(db)));
 app.use(handleErrors);
 
 export default app;

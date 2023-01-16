@@ -12,7 +12,7 @@ main(prisma)
 
 async function main(db: PrismaClient) {
   const ansh = await db.user.upsert({
-    where: { email: "mail@diviyansh.me" },
+    where: { email: "contact@diviyansh.me" },
     update: {},
     create: { email: "contact@diviyansh.me", name: "Ansh" },
   });

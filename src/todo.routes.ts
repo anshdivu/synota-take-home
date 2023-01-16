@@ -1,43 +1,38 @@
-import boom from "@hapi/boom";
-import { PrismaClient } from "@prisma/client";
 import express, { RequestHandler, Router } from "express";
-import { z } from "zod";
+import { TodoService } from "./todo.service";
 
-const todoList = z.array(z.string());
+export default (todoService: TodoService) => {
+  const router = Router();
+  router.use(express.json());
 
-const validateBody: RequestHandler = (req, res, next) => {
-  const result = todoList.safeParse(req.body);
-  if (result.success) return next();
-
-  if (result.error instanceof z.ZodError) {
-    const error400 = boom.badRequest(
-      "Invalid Input. This endpoint expects an array of strings",
-      { input: req.body }
-    );
-
-    next(error400);
-  }
-};
-
-export default (db: PrismaClient) => {
-  const router = Router().use(express.json());
-
-  router.put("/users/:userId/todos", validateBody, async (req, res, next) => {
+  router.get("/users/:userId/todos", async (req, res, next) => {
     try {
       const userId = +req.params.userId;
-      const todoList = req.body;
-
-      const val = await db.todo.upsert({
-        where: { authorId: userId },
-        update: { list: todoList },
-        create: { authorId: userId, list: todoList },
-      });
-
-      res.status(201).send(val);
+      const response = await todoService.findByUserId(userId);
+      res.status(201).send(response);
     } catch (error) {
       next(error);
     }
   });
+
+  const validateTodoList: RequestHandler = ({ body }, _res, next) => {
+    const [_todoList, error] = todoService.isValid(body);
+    error ? next(error) : next();
+  };
+
+  router.put(
+    "/users/:userId/todos",
+    validateTodoList,
+    async ({ params, body: todoList }, res, next) => {
+      try {
+        const userId = +params.userId;
+        const response = await todoService.upsertByUserId(userId, todoList);
+        res.status(201).send(response);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 
   return router;
 };
