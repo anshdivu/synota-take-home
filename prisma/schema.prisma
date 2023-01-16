@@ -11,19 +11,24 @@ datasource db {
 }
 
 model User {
-  // @TODO - In a production ready system id should be cuid/uuid
+  // @TODO - In a production ready system user id should be cuid/uuid
   // Using autoincrement() here only for my convience.
   id    Int    @id @default(autoincrement())
   email String @unique
   name  String
-  todos Todo?
+  todo  Todo?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Todo {
-  // @TODO - In a production ready system id should be cuid/uuid
-  // Using autoincrement() here only for my convience.
-  id       Int      @id @default(autoincrement())
-  content  String[] @default([])
-  author   User     @relation(fields: [authorId], references: [id])
-  authorId Int      @unique
+  id   Int      @id @default(autoincrement())
+  list String[] @default([])
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

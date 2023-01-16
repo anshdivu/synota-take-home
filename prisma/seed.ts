@@ -23,7 +23,7 @@ async function main(db: PrismaClient) {
     create: {
       email: "MDignan@synota.io",
       name: "Max",
-      todos: { create: { content: ["Item 1", "Item 2"] } },
+      todo: { create: { list: ["Item 1", "Item 2"] } },
     },
   });
 

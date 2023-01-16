@@ -14,14 +14,14 @@ app.use(express.json());
 
 app.get("/liveness", (_, res) => res.send("Live"));
 app.get("/readiness", async (_, res) => {
-  // This server is ready to accept request once it's connect to the DB
+  // This server is ready to accept request once it's connected to the DB
   // and if the db connection fails this server will NEVER we able to accept requests
-  // NOTE - $connect function is idempotent; we can call it safely in every `/readiness` call
+  // NOTE - $connect function is idempotent; we can safely call it in every `/readiness` call
   await db.$connect();
   res.send("Ready");
 });
 
-app.use(todoRoutes);
+app.use(todoRoutes(db));
 app.use(handleErrors);
 
 export default app;

@@ -1,4 +1,5 @@
 import boom from "@hapi/boom";
+import { PrismaClient } from "@prisma/client";
 import express, { RequestHandler, Router } from "express";
 import { z } from "zod";
 
@@ -18,11 +19,25 @@ const validateBody: RequestHandler = (req, res, next) => {
   }
 };
 
-const router = Router().use(express.json());
+export default (db: PrismaClient) => {
+  const router = Router().use(express.json());
 
-router.put("/users/:userId/todos", validateBody, (req, res) => {
-  const todos = req.body;
-  res.status(201).send(todos);
-});
+  router.put("/users/:userId/todos", validateBody, async (req, res, next) => {
+    try {
+      const userId = +req.params.userId;
+      const todoList = req.body;
 
-export default router;
+      const val = await db.todo.upsert({
+        where: { authorId: userId },
+        update: { list: todoList },
+        create: { authorId: userId, list: todoList },
+      });
+
+      res.status(201).send(val);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  return router;
+};
