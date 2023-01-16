@@ -18,11 +18,11 @@ const validateBody: RequestHandler = (req, res, next) => {
   }
 };
 
-const router = Router()
-  .use(express.json())
-  .put("/users/:userId/todos", validateBody, (req, res) => {
-    const todos = req.body;
-    res.status(201).send(todos);
-  });
+const router = Router().use(express.json());
+
+router.put("/users/:userId/todos", validateBody, (req, res) => {
+  const todos = req.body;
+  res.status(201).send(todos);
+});
 
 export default router;

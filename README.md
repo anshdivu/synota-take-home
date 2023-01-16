@@ -16,7 +16,9 @@ Build a server-side app (REST API) that can do the following:
 - [node ^18.13.0](/package.json#L7)
   - This is the [Active LTS](https://nodejs.org/en/about/releases/) release. This is the minimum version any current Node.js app should support.
 - [yarn ^1.22.4](/package.json#L8)
-  - Specifying a `yarn` minimum version is very arbitrary but it should still be specified.
+  - `brew install yarn`
+- Postgresql@14
+  - `brew install postgresql`
 
 ## Install
 
@@ -24,18 +26,17 @@ Build a server-side app (REST API) that can do the following:
 yarn install
 ```
 
-### First time setup
+### First time setups
 
-- Create a copy of `.env-sample` and name it `.env` in the root directory. Update the env vars as needed before running the app.
+1. Create a Database for local development - `createdb synota`
+2. Create a copy of `.env-sample` and name it `.env` in the root directory. Update the env vars especially the `DATABASE_URL`.
+3. Run Database initialization script - `yarn db:init`
 
 ## Usage
 
 ```sh
-# for prod deployment
-yarn build # Probably run this in your build pipeline
-yarn start
-
-# OR #
+# run local instance of postgres
+yarn dev:db
 
 # for local development
 yarn dev
@@ -44,6 +45,12 @@ yarn dev
 
 # for local development with file watch (auto-restart)
 yarn dev:watch
+
+# OR #
+
+# for prod deployment
+yarn build # Run this in the build pipeline
+yarn start
 ```
 
 ## Run tests

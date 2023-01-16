@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // @TODO - In a production ready system id should be cuid/uuid
+  // Using autoincrement() here only for my convience.
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String
+  todos Todo?
+}
+
+model Todo {
+  // @TODO - In a production ready system id should be cuid/uuid
+  // Using autoincrement() here only for my convience.
+  id       Int      @id @default(autoincrement())
+  content  String[] @default([])
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId Int      @unique
+}
