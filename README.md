@@ -18,7 +18,7 @@ Build a server-side app (REST API) that can do the following:
 - [yarn ^1.22.4](/package.json#L8)
   - `brew install yarn`
 - Postgresql@14
-  - `brew install postgresql`
+  - `brew install postgresql@14`
 
 ## Install
 
@@ -26,9 +26,23 @@ Build a server-side app (REST API) that can do the following:
 yarn install
 ```
 
+## Database Setup (Mac OS)
+
+1. Use [Homebrew](https://docs.brew.sh/Installation) to install Postgress version 14:
+   `brew install postgresql@14`
+2. Use instructions described by homebrew to either run postgres as a background service or a shell command. If you need to check the instructions again run:
+   `brew info postgresql@14`
+3. Create a Database for local development:
+   `createdb synota`
+4. Confirm the id of your shell user using:
+   `whoami`
+5. Create the Postgres `DATABASE_URL` using this pattern:
+   `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`
+   - For you local postgres server the DATABASE_URL should be something like:
+     `postgresql://<user-id>@localhost:5432/synota`
+
 ### First time setups
 
-1. Create a Database for local development - `createdb synota`
 2. Create a copy of `.env-sample` and name it `.env` in the root directory. Update the env vars especially the `DATABASE_URL`.
 3. Run Database initialization script - `yarn db:init`
 
@@ -36,7 +50,7 @@ yarn install
 
 ```sh
 # run local instance of postgres
-yarn dev:db
+## follow the instructions described in `brew info postgresql@14`
 
 # for local development
 yarn dev
