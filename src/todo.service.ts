@@ -8,17 +8,13 @@ const TodoValidator = z.array(z.string());
 class TodoService {
   constructor(private db: PrismaClient) {}
 
-  isValid(todoList: any) {
+  isValid(todoList: unknown) {
     const result = TodoValidator.safeParse(todoList);
     if (result.success) return [result.data, undefined] as const;
 
     const error400 = boom.badRequest(
       "Invalid Input. Expected an array of strings.",
-      {
-        input: todoList,
-        meta: result.error.issues,
-        cause: result.error.message,
-      }
+      { input: todoList, meta: result.error.issues }
     );
 
     return [undefined, error400] as const;

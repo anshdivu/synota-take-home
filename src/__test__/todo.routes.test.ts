@@ -6,7 +6,7 @@ import { describe, expect, test, vi } from "vitest";
 import todoRoutes from "../todo.routes";
 import { TodoService } from "../todo.service";
 
-describe("todo.routes", () => {
+describe.concurrent("todo.routes", () => {
   describe("GET /todos", () => {
     test("returns the users list of todos", async () => {
       const expectedTodo = { list: ["test_1", "Test_2"] } as Todo;
@@ -27,8 +27,6 @@ describe("todo.routes", () => {
       const handleException: ErrorRequestHandler = (err, _req, res, _next) => {
         res.status(999).send(err.message);
       };
-
-      const expectedTodo = { list: ["test_1", "Test_2"] } as Todo;
 
       const service = new TodoService(undefined as any);
       vi.spyOn(service, "findByUserId").mockImplementationOnce(() =>
