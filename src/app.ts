@@ -1,8 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
 import morgan from "morgan";
-import { basicAuthHandler } from "./auth.handler";
+import swaggerUi from "swagger-ui-express";
 
+import apiSpec from "./api.spec.json";
+import { basicAuthHandler } from "./auth.handler";
 import { errorHandler } from "./error.handler";
 import todoRoutes from "./todo.routes";
 import { TodoService } from "./todo.service";
@@ -23,6 +25,8 @@ app.get("/ready", async (_, res) => {
   res.send("Ready");
 });
 
+app.get("/", (_req, res) => res.redirect(301, "/docs"));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiSpec));
 app.use(basicAuthHandler(db));
 app.use(todoRoutes(new TodoService(db)));
 

@@ -4,12 +4,17 @@
 
 Build a server-side app (REST API) that can do the following:
 
-- [ ] Secure Login
-- [ ] Permissioned access and control of a resource (perhaps a todo list)
-- [ ] Non volatile memory to persist across restarts (SQL database, perhaps)
-- [ ] It should have tests that automatically run in CI/CD (perhaps GH Actions)
-- [ ] It should deploy to a host upon successful automated testing (perhaps heroku, render, fly.io, etc.)
-- [ ] Make sure to document your process with Git on Github/Gitlab.
+- [x] Secure Login
+- [x] Permissioned access and control of a resource (perhaps a todo list)
+- [x] Non volatile memory to persist across restarts (SQL database, perhaps)
+- [x] It should have tests that automatically run in CI/CD (perhaps GH Actions)
+- [x] It should deploy to a host upon successful automated testing (perhaps heroku, render, fly.io, etc.)
+- [x] Make sure to document your process with Git on Github/Gitlab.
+
+## Prod Deployment
+
+- This application is deployed at - https://synota-take-home.onrender.com
+- The API documentation is available at - https://synota-take-home.onrender.com/docs
 
 ## Prerequisites
 

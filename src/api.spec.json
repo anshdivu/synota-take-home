@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Synota Take Home - Todo List API",
+    "version": "1.0.0-beta"
+  },
+  "externalDocs": {
+    "description": "Git Repository",
+    "url": "https://github.com/anshdivu/synota-take-home/"
+  },
+  "servers": [
+    {
+      "url": "https://synota-take-home.onrender.com",
+      "description": "Render.com Prod Deployment"
+    },
+    {
+      "url": "http://localhost:5000",
+      "description": "Local Development Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Todo",
+      "description": "Todo Related Endpoints"
+    }
+  ],
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [{ "basicAuth": [] }],
+
+  "paths": {
+    "/users/{userId}/todos": {
+      "get": {
+        "summary": "Returns a list of todo items by userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "number", "minimum": 1 }
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "summary": "Creates or Overrides a list of Todo Items",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "number", "minimum": 1 }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  }
+}
