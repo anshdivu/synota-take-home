@@ -35,6 +35,7 @@
     "/users/{userId}/todos": {
       "get": {
         "summary": "Returns a list of todo items by userId",
+        "tags": ["Todo"],
         "parameters": [
           {
             "name": "userId",
@@ -47,6 +48,7 @@
       },
       "put": {
         "summary": "Creates or Overrides a list of Todo Items",
+        "tags": ["Todo"],
         "requestBody": {
           "required": true,
           "content": {
