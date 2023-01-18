@@ -15,6 +15,7 @@ declare global {
 export const basicAuthHandler: (db: PrismaClient) => RequestHandler =
   (db) => async (req, _res, next) => {
     const creds = parseBasicAuth(req);
+
     if (!creds) {
       return next(boom.unauthorized("Authorization Header Not Found"));
     }
@@ -32,8 +33,8 @@ async function findUserByCreds(db: PrismaClient, creds: BasicAuthResult) {
   const user = await db.user.findFirst({ where: { username: creds.name } });
   if (!user) return undefined;
 
-  const hashedPass = hashAndSalt(creds.pass, user.salt);
-  return hashedPass.equals(user.hashedPassword) ? user : undefined;
+  const hashedCreds = hashAndSalt(creds.pass, user.salt);
+  return hashedCreds.equals(user.hashedPassword) ? user : undefined;
 }
 
 export function hashAndSalt(pass: string, salt: Buffer) {
