@@ -92,7 +92,7 @@ describe.concurrent("auth.handler", () => {
     const mockUser = {
       salt: Buffer.from("testSalt1"),
       hashedPassword: Buffer.from(
-        "80637befeb1c5deafb14e72f4dee3976936074a3050ead6e5194573175d909dc",
+        "80637befeb1c5deafb14e72f4dee3976936074a3050ead6e5194573175d909dc", // hex version of salted testPass1
         "hex"
       ),
     } satisfies Partial<User>;
