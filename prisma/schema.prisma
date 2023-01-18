@@ -13,10 +13,13 @@ datasource db {
 model User {
   // @TODO - In a production ready system user id should be cuid/uuid
   // Using autoincrement() here only for my convience.
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
-  todo  Todo?
+  id             Int    @id @default(autoincrement())
+  email          String @unique
+  username       String @unique
+  hashedPassword Bytes
+  salt           Bytes
+
+  todo Todo?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

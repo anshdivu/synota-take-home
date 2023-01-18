@@ -1,9 +1,9 @@
 import boom from "@hapi/boom";
-import express, { ErrorRequestHandler } from "express";
+import express from "express";
 import request from "supertest";
 import { describe, expect, test } from "vitest";
 
-import handleErrors from "../error.handler";
+import { errorHandler } from "../error.handler";
 
 describe.concurrent("error.handler", () => {
   test("handles boom errors", async () => {
@@ -12,7 +12,7 @@ describe.concurrent("error.handler", () => {
       .use("/", () => {
         throw boom.badRequest("test error", expectedInput);
       })
-      .use(handleErrors);
+      .use(errorHandler);
 
     const response = await request(app).get("/");
 
@@ -25,7 +25,7 @@ describe.concurrent("error.handler", () => {
       .use("/", () => {
         throw new Error("test error msg");
       })
-      .use(handleErrors);
+      .use(errorHandler);
 
     const response = await request(app).get("/");
 
@@ -38,7 +38,7 @@ describe.concurrent("error.handler", () => {
       .use("/", () => {
         throw new Error();
       })
-      .use(handleErrors);
+      .use(errorHandler);
 
     const response = await request(app).get("/");
 

@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import crypto from "crypto";
+import { hashAndSalt } from "../src/auth.handler";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +16,11 @@ async function main(db: PrismaClient) {
   const ansh = await db.user.upsert({
     where: { email: "contact@diviyansh.me" },
     update: {},
-    create: { email: "contact@diviyansh.me", name: "Ansh" },
+    create: {
+      email: "contact@diviyansh.me",
+      username: "ansh",
+      ...createSaltAndPassword("ansh123"),
+    },
   });
 
   const max = await db.user.upsert({
@@ -22,7 +28,8 @@ async function main(db: PrismaClient) {
     update: {},
     create: {
       email: "MDignan@synota.io",
-      name: "Max",
+      username: "max",
+      ...createSaltAndPassword("max456"),
       todo: { create: { list: ["Item 1", "Item 2"] } },
     },
   });
@@ -30,8 +37,19 @@ async function main(db: PrismaClient) {
   const colin = await db.user.upsert({
     where: { email: "Colin@synota.io" },
     update: {},
-    create: { email: "Colin@synota.io", name: "Colin" },
+    create: {
+      email: "Colin@synota.io",
+      username: "colin",
+      ...createSaltAndPassword("colin789"),
+    },
   });
 
   console.log({ ansh, max, colin });
+}
+
+function createSaltAndPassword(pass: string) {
+  const randomSalt = crypto.randomBytes(16);
+  const hashedPassword = hashAndSalt(pass, randomSalt);
+
+  return { salt: randomSalt, hashedPassword };
 }
