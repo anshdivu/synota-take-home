@@ -76,6 +76,27 @@ describe.concurrent("todo.service", () => {
     }
   });
 
+  test("findByUserId return notFound error when Prisma fails", async () => {
+    const db = new PrismaClient();
+    const expectedError = new PrismaClientKnownRequestError("test error", {
+      meta: { a: 1 },
+      code: "T1",
+      clientVersion: "V1",
+    });
+    vi.spyOn(db, "todo", "get").mockReturnValue({
+      // @ts-expect-error
+      findFirstOrThrow: vi.fn(() => Promise.reject(expectedError)),
+    });
+    const service = new TodoService(db);
+
+    try {
+      await service.findByUserId(10);
+    } catch (error: any) {
+      expect(error.message).toEqual("No Todo Items found for user: 10");
+      expect(error.data).toEqual({ cause: "test error", meta: { a: 1 } });
+    }
+  });
+
   test("upsertByUserId return Todo from DB", async () => {
     const expectedTodo = ["test1"];
 
